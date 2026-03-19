@@ -5,3 +5,14 @@ backgroundColor = "#0e1117"
 secondaryBackgroundColor = "#1a1f2e"
 textColor = "#ffffff"
 font = "monospace"
+
+[theme]
+base = "dark"
+primaryColor = "#ff8c00"
+backgroundColor = "#0a0a0a"
+secondaryBackgroundColor = "#111111"
+textColor = "#ffffff"
+font = "monospace"
+
+[client]
+toolbarMode = "minimal"
