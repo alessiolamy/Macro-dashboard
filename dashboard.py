@@ -19,7 +19,7 @@ def check_password():
             .stButton button {background-color: #ff8c00; color: black; font-weight: bold; width: 100%;}
             </style>
         """, unsafe_allow_html=True)
-        st.markdown("## 🖥️ MACRO TERMINAL")
+        st.markdown("## TRADING TERMINAL")
         st.markdown("#### Restricted Access")
         password = st.text_input("Password", type="password")
         if st.button("LOGIN"):
@@ -35,7 +35,7 @@ if not check_password():
     st.stop()
 
 # --- PAGE SETUP ---
-st.set_page_config(page_title="Macro Terminal", layout="wide")
+st.set_page_config(page_title="Trading Terminal", layout="wide")
 st.markdown("""
     <style>
     body, .stApp { background-color: #0a0a0a; }
@@ -52,7 +52,7 @@ st.markdown("""
     </style>
 """, unsafe_allow_html=True)
 
-st.markdown("<h1 style='text-align:center; letter-spacing: 8px;'>⬛ MACRO TERMINAL</h1>", unsafe_allow_html=True)
+st.markdown("<h1 style='text-align:center; letter-spacing: 8px;'> TRADING TERMINAL</h1>", unsafe_allow_html=True)
 st.markdown("<p style='text-align:center; color:#666; font-family:monospace;'>FRED · ST. LOUIS FED · YAHOO FINANCE · LIVE DATA</p>", unsafe_allow_html=True)
 st.divider()
 
@@ -79,7 +79,7 @@ def make_chart(df, x, y, color='#ff8c00', title='', accent='#ff8c00'):
             fig.add_trace(go.Scatter(x=df[x], y=df[col], name=col,
                 line=dict(color=colors[i], width=1.5)))
     else:
-        fill_rgba = 'rgba(255,215,0,0.05)' if accent == '#ffd700' else 'rgba(255,140,0,0.05)'
+        fill_rgba = 'rgba(255,215,0,0.05)' if accent == '#ff8c00' else 'rgba(255,140,0,0.05)'
         fig.add_trace(go.Scatter(x=df[x], y=df[y], name=y,
             line=dict(color=color, width=1.5),
             fill='tozeroy', fillcolor=fill_rgba))
@@ -126,7 +126,7 @@ silver = silver_raw['Close'].squeeze().dropna()
 # ==============================================================
 # TABS
 # ==============================================================
-tab1, tab2 = st.tabs(["📊   MACRO", "🥇   GOLD · XAUUSD"])
+tab1, tab2 = st.tabs(["MACRO", "XAUUSD"])
 
 # ==============================================================
 # TAB 1 — MACRO
@@ -192,8 +192,8 @@ with tab1:
 with tab2:
     st.markdown("""
         <style>
-        [data-testid="stMetric"] { border-color: #ffd700 !important; }
-        [data-testid="stMetric"] label { color: #ffd700 !important; }
+        [data-testid="stMetric"] { border-color: #ff8c00 !important; }
+        [data-testid="stMetric"] label { color: #ff8c00 !important; }
         </style>
     """, unsafe_allow_html=True)
 
@@ -244,13 +244,13 @@ with tab2:
         g_df = gold.dropna().reset_index()
         g_df.columns = ['Date', 'XAUUSD']
         fig = make_chart(g_df, 'Date', 'XAUUSD',
-                         color='#ffd700', title='XAUUSD SPOT PRICE (USD/oz)', accent='#ffd700')
+                         color='#ff8c00', title='XAUUSD SPOT PRICE (USD/oz)', accent='#ff8c00')
         st.plotly_chart(fig, use_container_width=True)
     with col_right:
         tips_df = tips_clean.reset_index()
         tips_df.columns = ['Date', 'TIPS Real Yield %']
         fig = make_chart(tips_df, 'Date', 'TIPS Real Yield %',
-                         color='#ffd700', title='10Y TIPS REAL YIELD % — Primary gold driver', accent='#ffd700')
+                         color='#ff8c00', title='10Y TIPS REAL YIELD % — Primary gold driver', accent='#ff8c00')
         fig.add_hline(y=0, line_dash="dash", line_color="#ff3333", line_width=1,
                       annotation_text="0% — breakout zone",
                       annotation_position="bottom right",
@@ -263,13 +263,13 @@ with tab2:
         dxy_df = dxy_clean.reset_index()
         dxy_df.columns = ['Date', 'DXY']
         fig = make_chart(dxy_df, 'Date', 'DXY',
-                         color='#ffd700', title='DXY DOLLAR INDEX — Inverse correlation', accent='#ffd700')
+                         color='#ff8c00', title='DXY DOLLAR INDEX — Inverse correlation', accent='#ff8c00')
         st.plotly_chart(fig, use_container_width=True)
     with col2:
         gsr_df = gold_silver_ratio.reset_index()
         gsr_df.columns = ['Date', 'Gold/Silver Ratio']
         fig = make_chart(gsr_df, 'Date', 'Gold/Silver Ratio',
-                         color='#ffd700', title='GOLD / SILVER RATIO — Fear indicator', accent='#ffd700')
+                         color='#ff8c00', title='GOLD / SILVER RATIO — Fear indicator', accent='#ff8c00')
         fig.add_hline(y=80, line_dash="dash", line_color="#00ff88", line_width=1,
                       annotation_text="80 — hist. avg",
                       annotation_position="top right",
@@ -283,7 +283,7 @@ with tab2:
         be_df = be_clean.reset_index()
         be_df.columns = ['Date', 'Breakeven %']
         fig = make_chart(be_df, 'Date', 'Breakeven %',
-                         color='#ffd700', title='10Y BREAKEVEN INFLATION', accent='#ffd700')
+                         color='#ff8c00', title='10Y BREAKEVEN INFLATION', accent='#ff8c00')
         fig.add_hline(y=2, line_dash="dash", line_color="#00ff88", line_width=1,
                       annotation_text="2% Fed target",
                       annotation_position="bottom right",
@@ -295,18 +295,18 @@ with tab2:
     with col_left:
         combined = pd.DataFrame({'Gold': gold, 'TIPS': tips}).dropna().reset_index()
         combined.columns = ['Date', 'Gold', 'TIPS']
-        layout = base_layout('#ffd700')
+        layout = base_layout('#ff8c00')
         layout['title']  = dict(text='XAUUSD vs 10Y TIPS (inverted RHS)',
-                                font=dict(color='#ffd700', size=12))
+                                font=dict(color='#ff8c00', size=12))
         layout['yaxis']  = dict(gridcolor='#1a1a1a', showgrid=True, zeroline=False,
-                                title='Gold (USD/oz)', color='#ffd700')
+                                title='Gold (USD/oz)', color='#ff8c00')
         layout['yaxis2'] = dict(overlaying='y', side='right', autorange='reversed',
                                 showgrid=False, zeroline=False,
                                 title='TIPS % (inv.)', color='#00bfff')
         layout['legend'] = dict(orientation='h', y=-0.2, font=dict(size=10))
         fig = go.Figure()
         fig.add_trace(go.Scatter(x=combined['Date'], y=combined['Gold'],
-            name='XAUUSD', line=dict(color='#ffd700', width=1.5)))
+            name='XAUUSD', line=dict(color='#ff8c00', width=1.5)))
         fig.add_trace(go.Scatter(x=combined['Date'], y=combined['TIPS'],
             name='TIPS (inv.)', line=dict(color='#00bfff', width=1.5, dash='dot'),
             yaxis='y2'))
@@ -316,12 +316,12 @@ with tab2:
         oil_df = oil.dropna().reset_index()
         oil_df.columns = ['Date', 'WTI (USD/bbl)']
         fig = make_chart(oil_df, 'Date', 'WTI (USD/bbl)',
-                         color='#ffd700', title='WTI CRUDE OIL — Inflation proxy', accent='#ffd700')
+                         color='#ff8c00', title='WTI CRUDE OIL — Inflation proxy', accent='#ff8c00')
         st.plotly_chart(fig, use_container_width=True)
 
     # Signal summary
     st.divider()
-    st.markdown("<p style='font-family:monospace; color:#ffd700; font-size:0.75rem; letter-spacing:4px;'>MACRO SIGNAL SUMMARY · XAUUSD</p>", unsafe_allow_html=True)
+    st.markdown("<p style='font-family:monospace; color:#ff8c00; font-size:0.75rem; letter-spacing:4px;'>MACRO SIGNAL SUMMARY · XAUUSD</p>", unsafe_allow_html=True)
 
     signals = [
         ("10Y TIPS REAL YIELD",     f"{latest_tips}%",    tips_sig,
@@ -336,7 +336,7 @@ with tab2:
          "Rate cuts = falling real yields = gold bullish. Watch TIPS more than the Fed funds rate itself."),
     ]
 
-    color_map = {"🟢": "#00ff88", "🔴": "#ff3333", "🟡": "#ffd700"}
+    color_map = {"🟢": "#00ff88", "🔴": "#ff3333", "🟡": "#ff8c00"}
 
     for name, value, sig, desc in signals:
         dot_color = color_map.get(sig[0], "#888888")
@@ -346,7 +346,7 @@ with tab2:
                 <div style="width:8px; height:8px; border-radius:50%; background:{dot_color};
                             margin-top:5px; flex-shrink:0;"></div>
                 <div style="flex:1;">
-                    <span style="font-family:monospace; font-size:0.75rem; color:#ffd700;">{name}</span>
+                    <span style="font-family:monospace; font-size:0.75rem; color:#ff8c00;">{name}</span>
                     <span style="font-family:monospace; font-size:0.75rem; color:#888; margin-left:8px;">{value}</span>
                     <span style="font-family:monospace; font-size:0.75rem; color:{dot_color}; margin-left:8px;">· {sig[1:]}</span>
                     <p style="font-family:monospace; font-size:0.7rem; color:#555; margin:3px 0 0;">{desc}</p>
