@@ -103,9 +103,16 @@ def load_macro_data():
 def load_gold_data():
     # Gold & Silver from Yahoo Finance — no API restrictions
     gold_raw   = yf.download('GC=F', start='2015-01-01', auto_adjust=True, progress=False)
-    silver_raw = yf.download('SI=F', start='2015-01-01', auto_adjust=True, progress=False)
-    gold   = gold_raw['Close'].squeeze().dropna()
-    silver = silver_raw['Close'].squeeze().dropna()
+silver_raw = yf.download('SI=F', start='2015-01-01', auto_adjust=True, progress=False)
+
+# Fallback to ETFs if futures return empty
+if gold_raw.empty:
+    gold_raw = yf.download('GLD', start='2015-01-01', auto_adjust=True, progress=False)
+if silver_raw.empty:
+    silver_raw = yf.download('SLV', start='2015-01-01', auto_adjust=True, progress=False)
+
+gold   = gold_raw['Close'].squeeze().dropna()
+silver = silver_raw['Close'].squeeze().dropna()
 
     # FRED series — all freely redistributable
     tips      = fred.get_series('DFII10',     observation_start='2015-01-01')
