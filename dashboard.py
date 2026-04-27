@@ -116,10 +116,10 @@ silver = silver_raw['Close'].squeeze().dropna()
 
     # FRED series — all freely redistributable
 tips      = fred.get_series('DFII10',     observation_start='2015-01-01')
-    breakeven = fred.get_series('T10YIE',     observation_start='2015-01-01')
-    dxy       = fred.get_series('DTWEXBGS',   observation_start='2015-01-01')
-    fed_funds = fred.get_series('FEDFUNDS',   observation_start='2015-01-01')
-    oil       = fred.get_series('DCOILWTICO', observation_start='2015-01-01')
+breakeven = fred.get_series('T10YIE',     observation_start='2015-01-01')
+dxy       = fred.get_series('DTWEXBGS',   observation_start='2015-01-01')
+fed_funds = fred.get_series('FEDFUNDS',   observation_start='2015-01-01')
+oil       = fred.get_series('DCOILWTICO', observation_start='2015-01-01')
 
     return gold, silver, tips, breakeven, dxy, fed_funds, oil
 
