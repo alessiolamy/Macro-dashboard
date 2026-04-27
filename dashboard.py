@@ -108,7 +108,7 @@ def load_macro_data():
 @st.cache_data(ttl=86400)
 def load_gold_data():
     # XAUUSD spot price (London PM fix, USD per troy oz)
-    gold = fred.get_series('GOLDPMGBD228NLBM', observation_start='2015-01-01')
+    gold = fred.get_series('GOLDAMGBD228NLBM', observation_start='2015-01-01')
     # 10Y TIPS real yield (key gold driver)
     tips = fred.get_series('DFII10', observation_start='2015-01-01')
     # 10Y breakeven inflation
