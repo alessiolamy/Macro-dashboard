@@ -89,7 +89,6 @@ def make_chart(df, x, y, color='#ff8c00', title='', accent='#ff8c00'):
 # ==============================================================
 # DATA LOADERS
 # ==============================================================
-
 @st.cache_data(ttl=86400)
 def load_macro_data():
     cpi       = fred.get_series('CPIAUCSL',  observation_start='2015-01-01')
@@ -103,25 +102,25 @@ def load_macro_data():
 def load_gold_data():
     # Gold & Silver from Yahoo Finance — no API restrictions
     gold_raw   = yf.download('GC=F', start='2015-01-01', auto_adjust=True, progress=False)
-silver_raw = yf.download('SI=F', start='2015-01-01', auto_adjust=True, progress=False)
+    silver_raw = yf.download('SI=F', start='2015-01-01', auto_adjust=True, progress=False)
 
-# Fallback to ETFs if futures return empty
-if gold_raw.empty:
-    gold_raw = yf.download('GLD', start='2015-01-01', auto_adjust=True, progress=False)
-if silver_raw.empty:
-    silver_raw = yf.download('SLV', start='2015-01-01', auto_adjust=True, progress=False)
+    # Fallback to ETFs if futures return empty
+    if gold_raw.empty:
+        gold_raw = yf.download('GLD', start='2015-01-01', auto_adjust=True, progress=False)
+    if silver_raw.empty:
+        silver_raw = yf.download('SLV', start='2015-01-01', auto_adjust=True, progress=False)
 
-gold   = gold_raw['Close'].squeeze().dropna()
-silver = silver_raw['Close'].squeeze().dropna()
+    gold   = gold_raw['Close'].squeeze().dropna()
+    silver = silver_raw['Close'].squeeze().dropna()
 
     # FRED series — all freely redistributable
-tips      = fred.get_series('DFII10',     observation_start='2015-01-01')
-breakeven = fred.get_series('T10YIE',     observation_start='2015-01-01')
-dxy       = fred.get_series('DTWEXBGS',   observation_start='2015-01-01')
-fed_funds = fred.get_series('FEDFUNDS',   observation_start='2015-01-01')
-oil       = fred.get_series('DCOILWTICO', observation_start='2015-01-01')
+    tips      = fred.get_series('DFII10',     observation_start='2015-01-01')
+    breakeven = fred.get_series('T10YIE',     observation_start='2015-01-01')
+    dxy       = fred.get_series('DTWEXBGS',   observation_start='2015-01-01')
+    fed_funds = fred.get_series('FEDFUNDS',   observation_start='2015-01-01')
+    oil       = fred.get_series('DCOILWTICO', observation_start='2015-01-01')
 
-return gold, silver, tips, breakeven, dxy, fed_funds, oil
+    return gold, silver, tips, breakeven, dxy, fed_funds, oil
 
 # ==============================================================
 # TABS
@@ -134,7 +133,6 @@ tab1, tab2 = st.tabs(["MACRO", "XAUUSD"])
 with tab1:
     cpi, y2, y10, breakeven, fed_funds = load_macro_data()
     cpi_yoy = cpi.pct_change(12) * 100
-
     latest_cpi       = round(cpi_yoy.dropna().iloc[-1], 2)
     latest_spread    = round((y10 - y2).dropna().iloc[-1], 2)
     latest_breakeven = round(breakeven.dropna().iloc[-1], 2)
@@ -322,7 +320,6 @@ with tab2:
     # Signal summary
     st.divider()
     st.markdown("<p style='font-family:monospace; color:#ff8c00; font-size:0.75rem; letter-spacing:4px;'>MACRO SIGNAL SUMMARY · XAUUSD</p>", unsafe_allow_html=True)
-
     signals = [
         ("10Y TIPS REAL YIELD",     f"{latest_tips}%",    tips_sig,
          "Primary driver. Below 0% = structural gold bid. Above 1.5% = headwind. Watch this first."),
@@ -335,9 +332,7 @@ with tab2:
         ("FED FUNDS RATE",          f"{latest_fed_g}%",   fed_sig,
          "Rate cuts = falling real yields = gold bullish. Watch TIPS more than the Fed funds rate itself."),
     ]
-
     color_map = {"🟢": "#00ff88", "🔴": "#ff3333", "🟡": "#ff8c00"}
-
     for name, value, sig, desc in signals:
         dot_color = color_map.get(sig[0], "#888888")
         st.markdown(f"""
